@@ -1,11 +1,13 @@
 <template>
   <div>
-    <ul>
-      <li v-for="room in rooms">
-        <h3>{{ room.creater.username }}</h3>
-        {{ room.date }}
-      </li>
-    </ul>
+    <div>
+      <ul>
+        <li v-for="room in rooms">
+          <h3 @click="openDialog(room.id)">{{ room.creater.username }}</h3>
+          {{ room.date }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -22,7 +24,7 @@
     created() {
       $.ajaxSetup({
         headers: {'Authorization': "Token " + sessionStorage.getItem('auth_token')},
-      })
+      });
       this.loadRoom()
     },
     methods: {
@@ -32,9 +34,11 @@
           type: "GET",
           success: (response) => {
             this.rooms = response.data.data
-
           }
         })
+      },
+      openDialog(id) {
+        this.$emit("openDialog", id)
       }
     }
   }

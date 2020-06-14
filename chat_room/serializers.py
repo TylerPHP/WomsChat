@@ -18,7 +18,7 @@ class RoomSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ("creater", "invited", "date")
+        fields = ("id", "creater", "invited", "date")
 
 
 class ChatSerializers(serializers.ModelSerializer):
