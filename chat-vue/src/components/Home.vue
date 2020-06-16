@@ -1,12 +1,15 @@
 <template>
-  <div>
-    <h1>Чат на vue js</h1>
-    <button v-if="!auth" @click="goLogin">Вход</button>
-    <button v-else @click="logout" :title="title">Выход</button>
-
-    <Room v-if="auth" @openDialog="openDialog"/>
-    <Dialog v-if="dialog.show" :id="dialog.id"/>
-  </div>
+  <mu-container>
+    <mu-appbar style="width: 100%;" color="primary">
+      Чат на vue js
+      <mu-button flat slot="right" v-if="!auth" @click="goLogin">Вход</mu-button>
+      <mu-button flat slot="right" v-else @click="logout" :title="title">Выход</mu-button>
+    </mu-appbar>
+    <mu-row class="margin-down">
+      <Room v-if="auth" @openDialog="openDialog"/>
+      <Dialog v-if="dialog.show" :id="dialog.id"/>
+    </mu-row>
+  </mu-container>
 </template>
 
 <script>
@@ -15,7 +18,7 @@
 
   export default {
     name: "Home",
-     components: {
+    components: {
       Room,
       Dialog
     },
@@ -52,5 +55,7 @@
 </script>
 
 <style scoped>
-
+  .margin-down {
+    margin: 55px 15px;
+  }
 </style>

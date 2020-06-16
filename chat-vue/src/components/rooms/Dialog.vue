@@ -1,26 +1,40 @@
 <template>
-  <div>
-    <div class="dialog" v-for="dialog in dialogs">
-      <h3>{{ dialog.user.username }}</h3>
-      <p>{{ dialog.text }}</p>
-      <span>{{ dialog.date }}</span>
-    </div>
-  </div>
+  <mu-col span="8" xl="8">
+    <mu-container class="dialog">
+      <mu-row v-for="dialog in dialogs"
+              direction="column"
+              justify-content="start"
+              align-items="end">
+        <p><strong>{{ dialog.user.username }}</strong></p>
+        <p>{{ dialog.text }}</p>
+        <span>{{ dialog.date }}</span>
+      </mu-row>
+    </mu-container>
+    <mu-container>
+      <mu-row>
+        <mu-text-field v-model="form.textarea"
+                       multi-line :rows="4"
+                       placeholder="Введите текст сообщения">
+        </mu-text-field>
+        <mu-button class="btn-send" round color="success">Отправить</mu-button>
+      </mu-row>
+    </mu-container>
+  </mu-col>
 </template>
 
 <script>
-  import $ from 'jquery'
-
   export default {
     name: "Dialog",
     props: ["id"],
     data() {
       return {
         dialogs: '',
+        form: {
+          textarea: '',
+        }
       }
     },
     created() {
-      console.log(sessionStorage.getItem('auth_token'))
       $.ajaxSetup({
         headers: {'Authorization': "Token " + sessionStorage.getItem('auth_token')},
       })
@@ -45,7 +59,10 @@
 
 <style scoped>
   .dialog {
-    width: 70%;
-    height: 100px;
+    border: 1px solid #000;
+  }
+  .btn-send {
+    margin: 60px 0 0 15px;
+
   }
 </style>
