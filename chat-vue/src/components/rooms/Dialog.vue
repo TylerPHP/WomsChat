@@ -16,7 +16,7 @@
                        multi-line :rows="4"
                        placeholder="Введите текст сообщения">
         </mu-text-field>
-        <mu-button class="btn-send" round color="success">Отправить</mu-button>
+        <mu-button class="btn-send" round color="success" @click="sendMes">Отправить</mu-button>
       </mu-row>
     </mu-container>
   </mu-col>
@@ -39,6 +39,9 @@
         headers: {'Authorization': "Token " + sessionStorage.getItem('auth_token')},
       })
       this.loadDialog()
+      setInterval(() => {
+        this.loadDialog()
+      }, 5000)
     },
     methods: {
       loadDialog() {
@@ -52,6 +55,22 @@
             this.dialogs = response.data.data
           }
         })
+      },
+      sendMes() {
+        $.ajax({
+          url: "http://127.0.0.1:8000/api/v1/chat/dialog/",
+          type: "POST",
+          data: {
+            room: this.id,
+            text: this.form.textarea
+          },
+          success: (response) => {
+            this.loadDialog()
+          },
+          error: (response) => {
+            alert(response.statusText)
+          }
+        })
       }
     }
   }
@@ -61,6 +80,7 @@
   .dialog {
     border: 1px solid #000;
   }
+
   .btn-send {
     margin: 60px 0 0 15px;
 

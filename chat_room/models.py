@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class Room(models.Model):
     """Модель комнаты чата"""
-
     creater = models.ForeignKey(User, verbose_name="Создатель", on_delete=models.CASCADE)
     invited = models.ManyToManyField(User, verbose_name="Участники", related_name="invited_user")
     date = models.DateTimeField("Дата создания", auto_now_add=True)
@@ -24,4 +23,3 @@ class Chat(models.Model):
     class Meta:
         verbose_name = "Сообщение чата"
         verbose_name_plural = "Сообщение чатов"
-
